@@ -2,23 +2,55 @@ const express = require('express');
 const shortid = require('shortid');
 const server = express();
 
-let hubs = [];
+let lessons = [];
 
 server.use(express.json()); //middleware
 
-server.get('/', (req, res) => {
-    console.log(req)
+server.get('/api/lessons', (req, res) => {
     res.status(200).json({
-        message: "Hello. Welcome to the server."
+        lessons: lessons
     })
 })
 
-server.post('/api/hubs', (req, res) => {
+server.get('/api/lesson/:id', (req, res) => {
+    let id = req.params.id*1;
+    let lesson = lessons.find(item => item.lessonId === id);
 
-    const hubInfo = {...req.body, id: shortid.generate()};
-    hubs.push(hubInfo);
+    res.status(200).json(lesson)
+})
 
-    res.status(201).json(hubInfo)
+server.post('/api/lessons', (req, res) => {
+    const lesson = {...req.body, id: shortid.generate()};
+    lessons.push(lesson);
+    res.status(201).json(lesson)
+})
+
+server.delete('/api/deletelesson/:id', (req, res) => {
+    let id = req.params.id*1;
+    const lesson = lessons.find(item => item.lessonId === id);
+    lessons = lessons.filter(item => item.lessonId !== id)
+    res.status(200).json({
+        message: `Successfully deleted lesson with id ${id}`,
+        deletedLesson: lesson
+    })
+})
+
+server.put('/api/updatelesson/:id', (req, res) => {
+    let id = req.params.id*1;
+    lessons = lessons.map(item => {
+        if (item.lessonId === id) {
+            return {
+                ...item,
+                ...req.body
+            }
+        }
+        else return item
+    })
+    const lesson = lessons.find(item => item.lessonId === id);
+    res.status(200).json({
+        message: `Successfully updated lesson with id ${id}`,
+        updatedLesson: lesson
+    })
 })
 
 const PORT = 5000;
