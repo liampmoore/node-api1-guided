@@ -1,0 +1,23 @@
+{
+  "name": "api1-guided",
+  "version": "1.0.0",
+  "description": "Guided project",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liampmoore/node-api1-guided.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liampmoore/node-api1-guided/issues"
+  },
+  "homepage": "https://github.com/liampmoore/node-api1-guided#readme"
+}
